@@ -21,6 +21,10 @@
             Tema escuro
           </button>
 
+          <a id="menuAdministracao" class="botao-administracao" href="Usuarios.html">
+            Administração
+          </a>
+
           <button class="botao-sair" onclick="sair()">Sair</button>
         </div>
       </div>
@@ -39,12 +43,22 @@
 
       <div id="resumoTarefas" class="resumo-tarefas" aria-live="polite"></div>
 
+      <div class="pesquisa-tarefas">
+        <label for="pesquisaTarefas">Pesquisar tarefas</label>
+        <input
+          type="search"
+          id="pesquisaTarefas"
+          placeholder="Digite parte da tarefa"
+        />
+      </div>
+
       <!-- LISTA DE TAREFAS -->
 
       <div id="listaTarefas"></div>
     </div>
 
     <script src="../javascript/tema.js"></script>
+    <script src="../javascript/auth.js"></script>
     <script src="../javascript/tarefas.js"></script>
   </body>
 </html>

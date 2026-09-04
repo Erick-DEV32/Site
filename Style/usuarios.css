@@ -1,0 +1,288 @@
+:root {
+  --cor-fundo: #f4f4f4;
+  --cor-painel: white;
+  --cor-texto: #222;
+  --cor-secundaria: #666;
+  --cor-borda: #ddd;
+  --cor-item: #f8f9fa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 30px 16px;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.cabecalho,
+.secao-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.cabecalho {
+  margin-bottom: 25px;
+}
+
+.cabecalho h1,
+.secao-titulo h2 {
+  margin: 0;
+}
+
+.pre-titulo {
+  margin: 0 0 6px;
+  color: #198754;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.acoes-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+button,
+.botao-secundario {
+  padding: 10px 15px;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.botao-secundario {
+  background: #198754;
+  color: white;
+  text-decoration: none;
+}
+
+.botao-secundario:hover {
+  background: #146c43;
+}
+
+.botao-tema {
+  background: #6c757d;
+  color: white;
+}
+
+.botao-tema:hover {
+  background: #545b62;
+}
+
+.botao-sair {
+  background: #dc3545;
+  color: white;
+}
+
+section {
+  margin-bottom: 25px;
+  padding: 25px;
+  background: var(--cor-painel);
+  border-radius: 8px;
+}
+
+.secao-titulo {
+  margin-bottom: 20px;
+}
+
+.secao-titulo span {
+  color: var(--cor-secundaria);
+  font-size: 14px;
+}
+
+.pesquisa-usuarios {
+  margin-bottom: 20px;
+}
+
+.pesquisa-usuarios label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.pesquisa-usuarios input {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 5px;
+  background: var(--cor-painel);
+  color: var(--cor-texto);
+}
+
+.indicadores {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.indicador {
+  padding: 20px;
+  background: var(--cor-item);
+  border-left: 4px solid #198754;
+}
+
+.indicador span,
+.indicador small {
+  display: block;
+  color: var(--cor-secundaria);
+}
+
+.indicador strong {
+  display: block;
+  margin: 8px 0;
+  font-size: 30px;
+}
+
+.indicador small {
+  font-weight: bold;
+}
+
+.form-usuario {
+  display: grid;
+  grid-template-columns: 1fr 1fr 160px 140px auto;
+  align-items: end;
+  gap: 12px;
+}
+
+.campo label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.campo input,
+.campo select {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 5px;
+  background: var(--cor-painel);
+  color: var(--cor-texto);
+}
+
+.form-usuario button {
+  background: #007bff;
+  color: white;
+}
+
+.form-usuario button:hover {
+  background: #0056b3;
+}
+
+.mensagem {
+  min-height: 20px;
+  margin: 15px 0 0;
+  color: #198754;
+  font-weight: bold;
+}
+
+.mensagem.erro {
+  color: #dc3545;
+}
+
+.lista-usuarios {
+  margin-top: 10px;
+  border-top: 1px solid var(--cor-borda);
+}
+
+.sem-usuarios {
+  color: var(--cor-secundaria);
+}
+
+.usuario-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.dados-usuario strong,
+.dados-usuario span {
+  display: block;
+}
+
+.dados-usuario span,
+.usuario-protegido {
+  margin-top: 4px;
+  color: var(--cor-secundaria);
+  font-size: 13px;
+}
+
+.status-ativo,
+.status-inativo {
+  font-weight: bold;
+}
+
+.status-ativo {
+  color: #198754 !important;
+}
+
+.status-inativo {
+  color: #dc3545 !important;
+}
+
+.botao-status {
+  background: #6c757d;
+  color: white;
+}
+
+.botao-status:hover {
+  background: #545b62;
+}
+
+.botao-excluir {
+  background: #dc3545;
+  color: white;
+}
+
+body.tema-escuro {
+  --cor-fundo: #202124;
+  --cor-painel: #2d2f33;
+  --cor-texto: #f1f3f4;
+  --cor-secundaria: #c7c9cc;
+  --cor-borda: #555a60;
+  --cor-item: #3a3d42;
+}
+
+@media (max-width: 750px) {
+  .cabecalho,
+  .acoes-cabecalho {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .acoes-cabecalho button,
+  .acoes-cabecalho a {
+    text-align: center;
+  }
+
+  .form-usuario {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .form-usuario button {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 500px) {
+  .indicadores,
+  .form-usuario {
+    grid-template-columns: 1fr;
+  }
+}

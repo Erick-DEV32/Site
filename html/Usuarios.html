@@ -1,0 +1,108 @@
+<!doctype html>
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Administração - Gerenciador de Tarefas</title>
+
+    <link rel="stylesheet" href="../Style/usuarios.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="cabecalho">
+        <div>
+          <p class="pre-titulo">Administração</p>
+          <h1>Usuários e relatório</h1>
+        </div>
+
+        <div class="acoes-cabecalho">
+          <button id="botaoTema" class="botao-tema" type="button" onclick="alternarTema()">
+            Tema escuro
+          </button>
+
+          <a class="botao-secundario" href="Tarefas.html">Tarefas</a>
+          <button class="botao-sair" type="button" onclick="sair()">Sair</button>
+        </div>
+      </div>
+
+      <section class="relatorio" aria-labelledby="tituloRelatorio">
+        <div class="secao-titulo">
+          <h2 id="tituloRelatorio">Relatório geral</h2>
+          <span id="totalTarefas">0 tarefas</span>
+        </div>
+
+        <div class="indicadores">
+          <div class="indicador">
+            <span>Concluídas</span>
+            <strong id="tarefasConcluidas">0</strong>
+            <small id="percentualConcluidas">0%</small>
+          </div>
+
+          <div class="indicador">
+            <span>Pendentes</span>
+            <strong id="tarefasPendentes">0</strong>
+            <small id="percentualPendentes">0%</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="usuarios" aria-labelledby="tituloUsuarios">
+        <div class="secao-titulo">
+          <h2 id="tituloUsuarios">Usuários cadastrados</h2>
+          <span id="totalUsuarios">0 usuários</span>
+        </div>
+
+        <div class="pesquisa-usuarios">
+          <label for="pesquisaUsuarios">Pesquisar usuários</label>
+          <input
+            id="pesquisaUsuarios"
+            type="search"
+            placeholder="Nome ou perfil"
+          />
+        </div>
+
+        <form id="formUsuario" class="form-usuario">
+          <div class="campo">
+            <label for="novoUsuario">Usuário</label>
+            <input id="novoUsuario" type="text" required />
+          </div>
+
+          <div class="campo">
+            <label for="novaSenha">Senha</label>
+            <input id="novaSenha" type="password" required />
+          </div>
+
+          <div class="campo">
+            <label for="novoPerfil">Perfil</label>
+            <select id="novoPerfil">
+              <option value="usuario">Usuário</option>
+              <option value="admin">Administrador</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <label for="novoStatus">Status</label>
+            <select id="novoStatus">
+              <option value="ativo">Ativo</option>
+              <option value="inativo">Inativo</option>
+            </select>
+          </div>
+
+          <button type="submit">Cadastrar usuário</button>
+        </form>
+
+        <p id="mensagem" class="mensagem" aria-live="polite"></p>
+
+        <div id="listaUsuarios" class="lista-usuarios"></div>
+      </section>
+    </div>
+
+    <script src="../javascript/tema.js"></script>
+    <script src="../javascript/auth.js"></script>
+    <script src="../javascript/usuarios.js"></script>
+  </body>
+</html>

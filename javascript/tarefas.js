@@ -2,10 +2,12 @@
 // VERIFICAR LOGIN
 // ==========================================
 
-const usuarioLogado = localStorage.getItem("usuarioLogado");
+protegerPagina();
 
-if (usuarioLogado !== "true") {
-  window.location.href = "index.html";
+const menuAdministracao = document.getElementById("menuAdministracao");
+
+if (!usuarioEhAdmin()) {
+  menuAdministracao.hidden = true;
 }
 
 // ==========================================
@@ -55,6 +57,7 @@ function adicionarTarefa() {
 function mostrarTarefas() {
   const lista = document.getElementById("listaTarefas");
   const resumo = document.getElementById("resumoTarefas");
+  const termoPesquisa = document.getElementById("pesquisaTarefas").value.trim().toLowerCase();
 
   const concluidas = tarefas.filter(function (tarefa) {
     return tarefa.concluida;
@@ -88,7 +91,25 @@ function mostrarTarefas() {
     return;
   }
 
-  tarefas.forEach(function (tarefa) {
+  const tarefasFiltradas = tarefas.filter(function (tarefa) {
+    return tarefa.texto.toLowerCase().includes(termoPesquisa);
+  });
+
+  if (tarefasFiltradas.length === 0) {
+    lista.innerHTML = `
+
+        <p class="sem-tarefas">
+
+            Nenhuma tarefa encontrada.
+
+        </p>
+
+    `;
+
+    return;
+  }
+
+  tarefasFiltradas.forEach(function (tarefa) {
     const item = document.createElement("div");
 
     item.classList.add("tarefa");
@@ -216,26 +237,19 @@ function salvarTarefas() {
 }
 
 // ==========================================
-// SAIR
-// ==========================================
-
-function sair() {
-  localStorage.removeItem("usuarioLogado");
-
-  window.location.href = "index.html";
-}
-
-// ==========================================
 // ADICIONAR COM ENTER
 // ==========================================
 
 const inputTarefa = document.getElementById("inputTarefa");
+const pesquisaTarefas = document.getElementById("pesquisaTarefas");
 
 inputTarefa.addEventListener("keypress", function (event) {
   if (event.key === "Enter") {
     adicionarTarefa();
   }
 });
+
+pesquisaTarefas.addEventListener("input", mostrarTarefas);
 
 // ==========================================
 // CARREGAR A PÁGINA
