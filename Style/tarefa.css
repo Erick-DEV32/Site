@@ -1,7 +1,17 @@
+ :root {
+  --cor-fundo: #f4f4f4;
+  --cor-painel: white;
+  --cor-texto: #222;
+  --cor-secundaria: #555;
+  --cor-tarefa: #eeeeee;
+}
+
 body {
   font-family: Arial, sans-serif;
 
-  background: #f4f4f4;
+  background: var(--cor-fundo);
+
+  color: var(--cor-texto);
 
   margin: 0;
 }
@@ -11,7 +21,7 @@ body {
 
   margin: 50px auto;
 
-  background: white;
+  background: var(--cor-painel);
 
   padding: 30px;
 
@@ -52,6 +62,34 @@ button {
   color: white;
 }
 
+.acoes-cabecalho {
+  display: flex;
+
+  gap: 10px;
+
+  justify-content: center;
+}
+
+.botao-tema {
+  background: #6c757d;
+
+  color: white;
+}
+
+.botao-tema:hover {
+  background: #545b62;
+}
+
+.resumo-tarefas {
+  margin-bottom: 20px;
+
+  color: var(--cor-secundaria);
+
+  font-weight: bold;
+
+  text-align: center;
+}
+
 .tarefa {
   display: flex;
 
@@ -63,7 +101,7 @@ button {
 
   margin-bottom: 10px;
 
-  background: #eeeeee;
+  background: var(--cor-tarefa);
 
   border-radius: 5px;
 }
@@ -84,4 +122,12 @@ button {
   background: #dc3545;
 
   color: white;
+}
+
+body.tema-escuro {
+  --cor-fundo: #202124;
+  --cor-painel: #2d2f33;
+  --cor-texto: #f1f3f4;
+  --cor-secundaria: #c7c9cc;
+  --cor-tarefa: #3a3d42;
 }

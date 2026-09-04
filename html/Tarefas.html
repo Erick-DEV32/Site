@@ -16,7 +16,13 @@
       <div class="cabecalho">
         <h1>Gerenciador de Tarefas</h1>
 
-        <button class="botao-sair" onclick="sair()">Sair</button>
+        <div class="acoes-cabecalho">
+          <button id="botaoTema" class="botao-tema" type="button" onclick="alternarTema()">
+            Tema escuro
+          </button>
+
+          <button class="botao-sair" onclick="sair()">Sair</button>
+        </div>
       </div>
 
       <!-- NOVA TAREFA -->
@@ -31,11 +37,14 @@
         <button onclick="adicionarTarefa()">Adicionar</button>
       </div>
 
+      <div id="resumoTarefas" class="resumo-tarefas" aria-live="polite"></div>
+
       <!-- LISTA DE TAREFAS -->
 
       <div id="listaTarefas"></div>
     </div>
 
+    <script src="../javascript/tema.js"></script>
     <script src="../javascript/tarefas.js"></script>
   </body>
 </html>

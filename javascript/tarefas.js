@@ -54,6 +54,23 @@ function adicionarTarefa() {
 
 function mostrarTarefas() {
   const lista = document.getElementById("listaTarefas");
+  const resumo = document.getElementById("resumoTarefas");
+
+  const concluidas = tarefas.filter(function (tarefa) {
+    return tarefa.concluida;
+  }).length;
+
+  const pendentes = tarefas.length - concluidas;
+
+  const percentualConcluidas = tarefas.length === 0
+    ? 0
+    : Math.round((concluidas / tarefas.length) * 100);
+
+  const percentualPendentes = tarefas.length === 0
+    ? 0
+    : Math.round((pendentes / tarefas.length) * 100);
+
+  resumo.textContent = `Concluídas: ${concluidas} (${percentualConcluidas}%) | Pendentes: ${pendentes} (${percentualPendentes}%)`;
 
   lista.innerHTML = "";
 
