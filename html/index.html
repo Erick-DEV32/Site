@@ -1,0 +1,53 @@
+<!doctype html>
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Login - Gerenciador de Tarefas</title>
+
+    <link rel="stylesheet" href="../Style/style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="login-box">
+        <h1>Login</h1>
+
+        <p>Entre com suas credenciais</p>
+
+        <form id="formLogin">
+          <div class="campo">
+            <label for="usuario"> Usuário </label>
+
+            <input
+              type="text"
+              id="usuario"
+              placeholder="Digite seu usuário"
+              required
+            />
+          </div>
+
+          <div class="campo">
+            <label for="senha"> Senha </label>
+
+            <input
+              type="password"
+              id="senha"
+              placeholder="Digite sua senha"
+              required
+            />
+          </div>
+
+          <button type="submit">Entrar</button>
+        </form>
+
+        <p id="mensagem"></p>
+      </div>
+    </div>
+
+    <script src="../javascript/script.js"></script>
+  </body>
+</html>

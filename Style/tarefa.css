@@ -1,0 +1,87 @@
+body {
+  font-family: Arial, sans-serif;
+
+  background: #f4f4f4;
+
+  margin: 0;
+}
+
+.container {
+  max-width: 800px;
+
+  margin: 50px auto;
+
+  background: white;
+
+  padding: 30px;
+
+  border-radius: 10px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.nova-tarefa {
+  display: flex;
+
+  gap: 10px;
+
+  margin-bottom: 30px;
+}
+
+.nova-tarefa input {
+  flex: 1;
+
+  padding: 12px;
+}
+
+button {
+  padding: 10px 15px;
+
+  border: none;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+}
+
+.nova-tarefa button {
+  background: #007bff;
+
+  color: white;
+}
+
+.tarefa {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 15px;
+
+  margin-bottom: 10px;
+
+  background: #eeeeee;
+
+  border-radius: 5px;
+}
+
+.tarefa span {
+  flex: 1;
+}
+
+.tarefa.concluida span {
+  text-decoration: line-through;
+
+  opacity: 0.5;
+}
+
+.botao-sair {
+  margin-top: 20px;
+
+  background: #dc3545;
+
+  color: white;
+}

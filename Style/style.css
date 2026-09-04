@@ -1,0 +1,163 @@
+* {
+
+  margin: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+
+}
+
+body {
+
+
+font-family: Arial, sans-serif;
+
+background: #f4f4f4;
+
+
+}
+
+.container {
+
+
+width: 100%;
+
+min-height: 100vh;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+
+}
+
+.login-box {
+
+
+background: white;
+
+width: 100%;
+
+max-width: 400px;
+
+padding: 40px;
+
+border-radius: 10px;
+
+box-shadow:
+    0px 4px 15px
+    rgba(0, 0, 0, 0.1);
+
+
+}
+
+.login-box h1 {
+
+
+text-align: center;
+
+margin-bottom: 10px;
+
+
+}
+
+.login-box p {
+
+
+text-align: center;
+
+margin-bottom: 25px;
+
+color: #666;
+
+
+}
+
+.campo {
+
+
+margin-bottom: 20px;
+
+
+}
+
+.campo label {
+
+
+display: block;
+
+margin-bottom: 5px;
+
+font-weight: bold;
+
+
+}
+
+.campo input {
+
+
+width: 100%;
+
+padding: 12px;
+
+border: 1px solid #ccc;
+
+border-radius: 5px;
+
+font-size: 16px;
+
+
+}
+
+.campo input:focus {
+
+
+outline: none;
+
+border-color: #007bff;
+
+
+}
+
+button {
+
+
+width: 100%;
+
+padding: 12px;
+
+border: none;
+
+border-radius: 5px;
+
+cursor: pointer;
+
+background: #007bff;
+
+color: white;
+
+font-size: 16px;
+
+
+}
+
+button:hover {
+
+
+background: #0056b3;
+
+
+}
+
+#mensagem {
+
+
+margin-top: 15px;
+
+font-weight: bold;
+
+
+}
