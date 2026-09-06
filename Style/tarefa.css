@@ -16,6 +16,12 @@ body {
   margin: 0;
 }
 
+/* Mantém o foco visível para navegação por teclado. */
+:focus-visible {
+  outline: 3px solid #fd7e14;
+  outline-offset: 2px;
+}
+
 .container {
   max-width: 800px;
 
@@ -54,19 +60,37 @@ h1 {
   gap: 10px;
 
   margin-bottom: 30px;
+
+  flex-wrap: wrap;
 }
 
 .nova-tarefa input {
   flex: 1;
 
   padding: 12px;
+
+  min-width: 220px;
+}
+
+.nova-tarefa select,
+.filtros-tarefas select {
+  padding: 0 10px;
+
+  border: 1px solid #ccc;
+
+  border-radius: 5px;
+
+  background: var(--cor-painel);
+
+  color: var(--cor-texto);
+
+  font-size: 14px;
 }
 
 button {
   display: inline-flex;
 
   align-items: center;
-    /* Define as cores compartilhadas pela página de tarefas. */
 
   justify-content: center;
 
@@ -75,15 +99,12 @@ button {
   padding: 10px 15px;
 
   border: none;
-    /* Remove a margem padrão e define fundo e tipografia. */
 
   border-radius: 5px;
 
   cursor: pointer;
 
   font-size: 14px;
-
-    /* Limita a largura, centraliza e cria o painel principal. */
   line-height: 1.2;
 }
 
@@ -92,7 +113,6 @@ button {
 
   color: white;
 }
-    /* Alinha o título e os controles do cabeçalho. */
 
 .acoes-cabecalho {
   display: flex;
@@ -106,23 +126,18 @@ button {
 .botao-administracao,
 .botao-secundario {
   display: inline-flex;
-    /* Organiza o campo e o botão de nova tarefa. */
 
   align-items: center;
 
   justify-content: center;
 
   min-height: 42px;
-    /* Define o espaçamento interno do campo de nova tarefa. */
 
   padding: 10px 15px;
 
   border-radius: 5px;
-
-    /* Aplica dimensões e alinhamento comuns aos botões. */
   background: #198754;
 
-  color: white;
 
   text-decoration: none;
 }
@@ -138,7 +153,6 @@ button {
   color: white;
 
   font-size: 14px;
-    /* Organiza os botões de navegação do cabeçalho. */
 
   line-height: 1.2;
 }
@@ -146,7 +160,6 @@ button {
 .botao-tema:hover {
   background: #545b62;
 }
-    /* Faz os links administrativos se comportarem como botões. */
 
 .resumo-tarefas {
   margin-bottom: 20px;
@@ -160,12 +173,10 @@ button {
 
 .pesquisa-tarefas {
   margin-bottom: 20px;
-    /* Define o estado visual de interação dos links. */
 }
 
 .pesquisa-tarefas label {
   display: block;
-    /* Aplica a cor neutra ao botão de tema. */
 
   margin-bottom: 6px;
 
@@ -176,36 +187,145 @@ button {
   width: 100%;
 
   padding: 12px;
-
-    /* Reserva espaço e centraliza o resumo numérico. */
   border: 1px solid #ccc;
 
   border-radius: 5px;
 }
 
+.filtros-tarefas {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 10px;
+
+  margin-bottom: 20px;
+}
+
 .tarefa {
   display: flex;
-    /* Cria espaço abaixo da área de pesquisa. */
 
   align-items: center;
 
   gap: 10px;
-    /* Coloca o rótulo da pesquisa acima do campo. */
 
   padding: 15px;
 
   margin-bottom: 10px;
 
   background: var(--cor-tarefa);
-    /* Ocupa toda a largura disponível para facilitar a pesquisa. */
 
   border-radius: 5px;
+
+  flex-wrap: wrap;
 }
 
 .tarefa span {
   flex: 1;
+
+  min-width: 180px;
 }
-    /* Organiza cada tarefa em uma linha com seus controles. */
+
+.detalhes-tarefa {
+  width: 100%;
+
+  margin-left: 28px;
+
+  color: var(--cor-secundaria);
+
+  font-size: 13px;
+}
+
+.tarefa.atrasada {
+  border-left: 4px solid #dc3545;
+}
+
+.modal {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 10;
+
+  display: grid;
+
+  place-items: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+.modal-conteudo {
+  width: min(100%, 420px);
+
+  padding: 25px;
+
+  border-radius: 8px;
+
+  background: var(--cor-painel);
+
+  color: var(--cor-texto);
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-conteudo h2 {
+  margin-top: 0;
+}
+
+.modal-conteudo p {
+  color: var(--cor-secundaria);
+}
+
+.modal-conteudo label {
+  display: block;
+
+  margin-bottom: 6px;
+
+  font-weight: bold;
+}
+
+.modal-conteudo input {
+  width: 100%;
+
+  padding: 11px;
+
+  border: 1px solid #ccc;
+
+  border-radius: 5px;
+
+  background: var(--cor-painel);
+
+  color: var(--cor-texto);
+}
+
+.acoes-modal {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 20px;
+}
+
+.botao-secundario-modal {
+  background: #6c757d;
+
+  color: white;
+}
+
+.botao-confirmar-modal {
+  background: #007bff;
+
+  color: white;
+}
+}
 
 .tarefa.concluida span {
   text-decoration: line-through;
@@ -215,19 +335,15 @@ button {
 
 .botao-sair {
   background: #dc3545;
-
-    /* Faz o texto ocupar o espaço livre da linha. */
   color: white;
 }
 
 body.tema-escuro {
-    /* Risca e suaviza visualmente uma tarefa concluída. */
   --cor-fundo: #202124;
   --cor-painel: #2d2f33;
   --cor-texto: #f1f3f4;
   --cor-secundaria: #c7c9cc;
   --cor-tarefa: #3a3d42;
-    /* Aplica a cor de destaque ao botão de saída. */
 }
 
 @media (max-width: 650px) {
@@ -241,6 +357,32 @@ body.tema-escuro {
   .acoes-cabecalho button,
   .acoes-cabecalho a {
     text-align: center;
-    /* Empilha cabeçalho e ações em telas estreitas. */
+  }
+
+  .nova-tarefa,
+  .filtros-tarefas {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .nova-tarefa input,
+  .nova-tarefa select,
+  .nova-tarefa button,
+  .filtros-tarefas select {
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+  }
+
+  .filtros-tarefas {
+    display: grid;
+  }
+
+  .tarefa button {
+    flex: 1;
+  }
+
+  .detalhes-tarefa {
+    margin-left: 0;
   }
 }

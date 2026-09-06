@@ -39,6 +39,14 @@ function mostrarRelatorio() {
   const percentualPendentes = tarefas.length === 0
     ? 0
     : Math.round((pendentes / tarefas.length) * 100);
+  const atrasadas = tarefas.filter(function (tarefa) {
+    return tarefa.prazo
+      && tarefa.prazo < new Date().toISOString().slice(0, 10)
+      && !tarefa.concluida;
+  }).length;
+  const usuariosAtivos = carregarUsuarios().filter(function (usuario) {
+    return usuario.status === "ativo";
+  }).length;
 
   // Atualiza o total com singular ou plural adequado.
   document.getElementById("totalTarefas").textContent = `${tarefas.length} ${tarefas.length === 1 ? "tarefa" : "tarefas"}`;
@@ -50,6 +58,39 @@ function mostrarRelatorio() {
   document.getElementById("tarefasPendentes").textContent = pendentes;
   // Atualiza o percentual de pendências.
   document.getElementById("percentualPendentes").textContent = `${percentualPendentes}%`;
+  document.getElementById("tarefasAtrasadas").textContent = atrasadas;
+  document.getElementById("usuariosAtivos").textContent = usuariosAtivos;
+
+  // Conta as tarefas associadas a cada usuário para o ranking administrativo.
+  const tarefasPorUsuario = {};
+  tarefas.forEach(function (tarefa) {
+    const usuario = tarefa.usuario || "admin";
+    tarefasPorUsuario[usuario] = (tarefasPorUsuario[usuario] || 0) + 1;
+  });
+
+  const ranking = Object.entries(tarefasPorUsuario)
+    .sort(function (primeiro, segundo) {
+      return segundo[1] - primeiro[1];
+    });
+  const listaRanking = document.getElementById("tarefasPorUsuario");
+
+  if (ranking.length === 0) {
+    listaRanking.innerHTML = "<p class=\"sem-usuarios\">Nenhuma tarefa cadastrada.</p>";
+    return;
+  }
+
+  ranking.forEach(function (item) {
+    const linha = document.createElement("div");
+    const nome = document.createElement("strong");
+    const total = document.createElement("span");
+
+    linha.className = "item-ranking";
+    nome.textContent = item[0];
+    total.textContent = `${item[1]} ${item[1] === 1 ? "tarefa" : "tarefas"}`;
+    linha.appendChild(nome);
+    linha.appendChild(total);
+    listaRanking.appendChild(linha);
+  });
 }
 
 // Filtra e renderiza os usuários cadastrados.

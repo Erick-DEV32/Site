@@ -49,7 +49,29 @@
         <input
           type="text"
           id="inputTarefa"
-          placeholder="Digite uma nova tarefa">
+          placeholder="Digite uma nova tarefa"
+          aria-label="Texto da nova tarefa">
+
+        <!-- Define a prioridade da tarefa. -->
+        <select id="prioridadeTarefa" aria-label="Prioridade da tarefa">
+          <option value="baixa">Prioridade baixa</option>
+          <option value="media" selected>Prioridade média</option>
+          <option value="alta">Prioridade alta</option>
+        </select>
+
+        <!-- Define a categoria da tarefa. -->
+        <select id="categoriaTarefa" aria-label="Categoria da tarefa">
+          <option value="geral">Geral</option>
+          <option value="trabalho">Trabalho</option>
+          <option value="estudos">Estudos</option>
+          <option value="pessoal">Pessoal</option>
+        </select>
+
+        <!-- Define o prazo opcional da tarefa. -->
+        <input
+          type="date"
+          id="prazoTarefa"
+          aria-label="Prazo da tarefa">
 
         <!-- Solicita a criação da tarefa. -->
         <button type="button" onclick="adicionarTarefa()">Adicionar</button>
@@ -67,10 +89,58 @@
           placeholder="Digite parte da tarefa">
       </div>
 
+      <!-- Reúne filtros e ordenação da lista. -->
+      <div class="filtros-tarefas" aria-label="Filtros de tarefas">
+        <select id="filtroStatus" aria-label="Filtrar por status">
+          <option value="todas">Todas as tarefas</option>
+          <option value="pendentes">Somente pendentes</option>
+          <option value="concluidas">Somente concluídas</option>
+          <option value="atrasadas">Somente atrasadas</option>
+        </select>
+
+        <select id="filtroPrioridade" aria-label="Filtrar por prioridade">
+          <option value="todas">Todas as prioridades</option>
+          <option value="alta">Prioridade alta</option>
+          <option value="media">Prioridade média</option>
+          <option value="baixa">Prioridade baixa</option>
+        </select>
+
+        <select id="filtroCategoria" aria-label="Filtrar por categoria">
+          <option value="todas">Todas as categorias</option>
+          <option value="geral">Geral</option>
+          <option value="trabalho">Trabalho</option>
+          <option value="estudos">Estudos</option>
+          <option value="pessoal">Pessoal</option>
+        </select>
+
+        <select id="ordenacaoTarefas" aria-label="Ordenar tarefas">
+          <option value="criacao">Mais recentes</option>
+          <option value="prazo">Prazo mais próximo</option>
+          <option value="prioridade">Maior prioridade</option>
+          <option value="nome">Nome</option>
+        </select>
+      </div>
+
       <!-- LISTA DE TAREFAS -->
 
       <!-- Recebe dinamicamente as tarefas criadas pelo JavaScript. -->
       <div id="listaTarefas"></div>
+    </div>
+
+    <!-- Modal reutilizado para edição e confirmação de exclusão. -->
+    <div id="modalTarefa" class="modal" hidden>
+      <div class="modal-conteudo" role="dialog" aria-modal="true" aria-labelledby="tituloModal">
+        <h2 id="tituloModal">Editar tarefa</h2>
+        <p id="mensagemModal"></p>
+
+        <label id="rotuloModal" for="valorModal">Texto da tarefa</label>
+        <input id="valorModal" type="text">
+
+        <div class="acoes-modal">
+          <button id="cancelarModal" type="button" class="botao-secundario-modal">Cancelar</button>
+          <button id="confirmarModal" type="button" class="botao-confirmar-modal">Confirmar</button>
+        </div>
+      </div>
     </div>
 
     <!-- Carrega o comportamento do tema. -->

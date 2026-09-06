@@ -22,6 +22,12 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/* Mantém o foco visível para navegação por teclado. */
+:focus-visible {
+  outline: 3px solid #fd7e14;
+  outline-offset: 2px;
+}
+
 .container {
   /* Centraliza o conteúdo e limita sua largura máxima. */
   max-width: 900px;
@@ -165,6 +171,34 @@ section {
 .indicador small {
   /* Empilha os textos auxiliares do indicador. */
   display: block;
+  color: var(--cor-secundaria);
+}
+
+.indicador-atrasado {
+  border-left-color: #dc3545;
+}
+
+.ranking {
+  margin-bottom: 25px;
+  padding: 25px;
+  background: var(--cor-painel);
+  border-radius: 8px;
+}
+
+.lista-ranking {
+  border-top: 1px solid var(--cor-borda);
+}
+
+.item-ranking {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.item-ranking span {
   color: var(--cor-secundaria);
 }
 

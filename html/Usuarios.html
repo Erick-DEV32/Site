@@ -64,7 +64,29 @@
             <strong id="tarefasPendentes">0</strong>
             <small id="percentualPendentes">0%</small>
           </div>
+
+          <!-- Indicador de tarefas vencidas ainda não concluídas. -->
+          <div class="indicador indicador-atrasado">
+            <span>Atrasadas</span>
+            <strong id="tarefasAtrasadas">0</strong>
+            <small>Precisam de atenção</small>
+          </div>
+
+          <!-- Indicador de usuários disponíveis para acesso. -->
+          <div class="indicador">
+            <span>Usuários ativos</span>
+            <strong id="usuariosAtivos">0</strong>
+            <small>Contas habilitadas</small>
+          </div>
         </div>
+      </section>
+
+      <!-- Apresenta a quantidade de tarefas associada a cada usuário. -->
+      <section class="ranking" aria-labelledby="tituloRanking">
+        <div class="secao-titulo">
+          <h2 id="tituloRanking">Tarefas por usuário</h2>
+        </div>
+        <div id="tarefasPorUsuario" class="lista-ranking"></div>
       </section>
 
   <!-- Apresenta a pesquisa, o cadastro e a lista de usuários. -->
