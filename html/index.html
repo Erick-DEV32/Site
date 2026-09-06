@@ -45,7 +45,12 @@
         <!-- Campo destinado à senha, com conteúdo oculto. -->
         <div class="campo">
           <label for="senha">Senha</label>
-          <input type="password" id="senha" placeholder="Digite sua senha" required autocomplete="current-password">
+          <div class="campo-senha">
+            <input type="password" id="senha" placeholder="Digite sua senha" required autocomplete="current-password">
+            <button id="alternarSenha" class="botao-senha" type="button" aria-label="Mostrar senha" aria-pressed="false">
+              Mostrar
+            </button>
+          </div>
         </div>
 
         <!-- Envia as credenciais para o código JavaScript validar. -->

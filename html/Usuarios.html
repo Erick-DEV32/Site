@@ -138,8 +138,10 @@
             </select>
           </div>
 
-          <!-- Envia os dados para o cadastro. -->
-          <button type="submit">Cadastrar usuário</button>
+          <!-- Envia os dados para o cadastro ou para a edição. -->
+          <button id="botaoSalvarUsuario" type="submit">Cadastrar usuário</button>
+          <!-- Cancela a edição e devolve o formulário ao modo de cadastro. -->
+          <button id="botaoCancelarEdicao" class="botao-cancelar" type="button" hidden>Cancelar</button>
         </form>
 
         <!-- Recebe mensagens do cadastro e das ações administrativas. -->

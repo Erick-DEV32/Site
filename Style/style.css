@@ -138,6 +138,42 @@ font-size: 16px;
 
 }
 
+.campo-senha {
+  position: relative;
+}
+
+.campo-senha input {
+  padding-right: 88px;
+}
+
+.botao-senha {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  z-index: 1;
+  width: auto;
+  min-height: 32px;
+  padding: 6px 10px;
+  transform: translateY(-50%);
+  background: transparent;
+  color: #007bff;
+  font-size: 13px;
+}
+
+.botao-senha:hover {
+  background: #e8f1ff;
+  color: #0056b3;
+}
+
+body.tema-escuro .botao-senha {
+  color: #8ab4f8;
+}
+
+body.tema-escuro .botao-senha:hover {
+  background: #3a3d42;
+  color: #aecbfa;
+}
+
 .botao-tema {
   /* Ajusta o botão de tema para seu conteúdo e o centraliza. */
   width: auto;

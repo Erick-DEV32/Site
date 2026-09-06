@@ -12,6 +12,9 @@ const listaUsuarios = document.getElementById("listaUsuarios");
 const formularioUsuario = document.getElementById("formUsuario");
 // Obtém o elemento que exibe mensagens de sucesso ou erro.
 const mensagem = document.getElementById("mensagem");
+const botaoSalvarUsuario = document.getElementById("botaoSalvarUsuario");
+const botaoCancelarEdicao = document.getElementById("botaoCancelarEdicao");
+let usuarioEmEdicao = null;
 
 // Exibe uma mensagem e aplica a classe visual de erro quando necessário.
 function mostrarMensagem(texto, erro) {
@@ -73,6 +76,7 @@ function mostrarRelatorio() {
       return segundo[1] - primeiro[1];
     });
   const listaRanking = document.getElementById("tarefasPorUsuario");
+    listaRanking.innerHTML = "";
 
   if (ranking.length === 0) {
     listaRanking.innerHTML = "<p class=\"sem-usuarios\">Nenhuma tarefa cadastrada.</p>";
@@ -167,6 +171,16 @@ function mostrarUsuarios() {
         alternarStatus(usuario.usuario);
       });
 
+      // Cria o botão de edição do usuário.
+      const botaoEditar = document.createElement("button");
+      botaoEditar.className = "botao-editar";
+      botaoEditar.type = "button";
+      botaoEditar.textContent = "Editar";
+      botaoEditar.setAttribute("aria-label", `Editar usuário ${usuario.usuario}`);
+      botaoEditar.addEventListener("click", function () {
+        editarUsuario(usuario.usuario);
+      });
+
       // Cria o botão de exclusão do usuário.
       const botaoExcluir = document.createElement("button");
       botaoExcluir.className = "botao-excluir";
@@ -177,6 +191,7 @@ function mostrarUsuarios() {
         excluirUsuario(usuario.usuario);
       });
       item.appendChild(botaoStatus);
+      item.appendChild(botaoEditar);
       item.appendChild(botaoExcluir);
     } else {
       // Exibe o motivo pelo qual a conta não pode ser alterada.
@@ -189,6 +204,34 @@ function mostrarUsuarios() {
     // Insere a linha pronta na lista da página.
     listaUsuarios.appendChild(item);
   });
+}
+
+// Preenche o formulário com os dados do usuário escolhido para edição.
+function editarUsuario(nomeUsuario) {
+  const usuario = carregarUsuarios().find(function (item) {
+    return item.usuario === nomeUsuario;
+  });
+
+  if (!usuario || usuario.usuario === "admin" || usuario.usuario === obterUsuarioAtual()) {
+    return;
+  }
+
+  usuarioEmEdicao = usuario.usuario;
+  document.getElementById("novoUsuario").value = usuario.usuario;
+  document.getElementById("novaSenha").value = usuario.senha;
+  document.getElementById("novoPerfil").value = usuario.perfil;
+  document.getElementById("novoStatus").value = usuario.status;
+  botaoSalvarUsuario.textContent = "Salvar alterações";
+  botaoCancelarEdicao.hidden = false;
+  document.getElementById("novoUsuario").focus();
+}
+
+// Cancela a edição e restaura o formulário de cadastro.
+function cancelarEdicao() {
+  usuarioEmEdicao = null;
+  formularioUsuario.reset();
+  botaoSalvarUsuario.textContent = "Cadastrar usuário";
+  botaoCancelarEdicao.hidden = true;
 }
 
 // Alterna entre ativo e inativo para um usuário específico.
@@ -243,6 +286,50 @@ formularioUsuario.addEventListener("submit", function (event) {
   const status = document.getElementById("novoStatus").value;
   const usuarios = carregarUsuarios();
 
+  // Atualiza um cadastro existente quando o formulário está no modo de edição.
+  if (usuarioEmEdicao) {
+    const usuario = usuarios.find(function (item) {
+      return item.usuario === usuarioEmEdicao;
+    });
+    const nomeDuplicado = usuarios.some(function (item) {
+      return item.usuario.toLowerCase() === nomeUsuario.toLowerCase()
+        && item.usuario !== usuarioEmEdicao;
+    });
+
+    if (nomeDuplicado) {
+      mostrarMensagem("Este usuário já está cadastrado.", true);
+      return;
+    }
+
+    if (!usuario) {
+      cancelarEdicao();
+      return;
+    }
+
+    usuarios.forEach(function (item) {
+      if (item.usuario === usuarioEmEdicao) {
+        item.usuario = nomeUsuario;
+        item.senha = senha;
+        item.perfil = perfil;
+        item.status = status;
+      }
+    });
+
+    const tarefas = JSON.parse(localStorage.getItem("tarefas")) || [];
+    tarefas.forEach(function (tarefa) {
+      if (tarefa.usuario === usuarioEmEdicao) {
+        tarefa.usuario = nomeUsuario;
+      }
+    });
+    localStorage.setItem("tarefas", JSON.stringify(tarefas));
+    salvarUsuarios(usuarios);
+    cancelarEdicao();
+    mostrarRelatorio();
+    mostrarUsuarios();
+    mostrarMensagem("Usuário atualizado com sucesso.", false);
+    return;
+  }
+
   // Impede nomes duplicados ignorando diferenças entre maiúsculas e minúsculas.
   if (usuarios.some(function (usuario) {
     return usuario.usuario.toLowerCase() === nomeUsuario.toLowerCase();
@@ -268,6 +355,9 @@ formularioUsuario.addEventListener("submit", function (event) {
 
 // Refaz a filtragem a cada alteração no campo de pesquisa.
 document.getElementById("pesquisaUsuarios").addEventListener("input", mostrarUsuarios);
+
+// Permite cancelar a edição pelo botão do formulário.
+botaoCancelarEdicao.addEventListener("click", cancelarEdicao);
 
 // Renderiza o relatório e os usuários no carregamento inicial.
 mostrarRelatorio();

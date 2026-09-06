@@ -7,6 +7,20 @@ const mensagem = document.getElementById("mensagem");
 // Carrega os usuários disponíveis para validar as credenciais.
 const usuarios = carregarUsuarios();
 
+// Obtém o campo de senha e o botão que controla sua visibilidade.
+const campoSenha = document.getElementById("senha");
+const alternarSenha = document.getElementById("alternarSenha");
+
+// Alterna entre senha oculta e texto visível.
+alternarSenha.addEventListener("click", function () {
+  const senhaVisivel = campoSenha.type === "text";
+
+  campoSenha.type = senhaVisivel ? "password" : "text";
+  alternarSenha.textContent = senhaVisivel ? "Mostrar" : "Ocultar";
+  alternarSenha.setAttribute("aria-label", senhaVisivel ? "Mostrar senha" : "Ocultar senha");
+  alternarSenha.setAttribute("aria-pressed", String(!senhaVisivel));
+});
+
 // Executa a validação quando o formulário é enviado.
 formulario.addEventListener("submit", function (event) {
   // Impede o recarregamento padrão da página causado pelo formulário.

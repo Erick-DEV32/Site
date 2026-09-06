@@ -251,6 +251,19 @@ section {
   background: #0056b3;
 }
 
+.form-usuario .botao-cancelar {
+  background: #6c757d;
+  color: white;
+}
+
+.form-usuario button[hidden] {
+  display: none;
+}
+
+.form-usuario .botao-cancelar:hover {
+  background: #545b62;
+}
+
 .mensagem {
   /* Reserva espaço para mensagens administrativas. */
   min-height: 20px;
@@ -321,6 +334,15 @@ section {
   color: white;
 }
 
+.botao-editar {
+  background: #0d6efd;
+  color: white;
+}
+
+.botao-editar:hover {
+  background: #0a58ca;
+}
+
 .botao-status:hover {
   /* Escurece o botão de status durante a interação. */
   background: #545b62;
@@ -361,6 +383,15 @@ body.tema-escuro {
 
   .form-usuario button {
     grid-column: 1 / -1;
+  }
+
+  .usuario-item {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .usuario-item button {
+    width: 100%;
   }
 }
 
