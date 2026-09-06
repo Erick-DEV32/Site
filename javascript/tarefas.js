@@ -299,6 +299,10 @@ function mostrarTarefas() {
       abrirExclusao(tarefa.id);
     });
 
+    // Agrupa as ações principais lado a lado no cartão.
+    const acoesTarefa = document.createElement("div");
+    acoesTarefa.className = "acoes-tarefa";
+
     // Insere os elementos na ordem em que aparecem na interface.
     item.appendChild(checkbox);
 
@@ -382,9 +386,9 @@ function mostrarTarefas() {
     areaSubtarefas.appendChild(formularioSubtarefa);
     item.appendChild(areaSubtarefas);
 
-    item.appendChild(botaoEditar);
-
-    item.appendChild(botaoApagar);
+    acoesTarefa.appendChild(botaoEditar);
+    acoesTarefa.appendChild(botaoApagar);
+    item.appendChild(acoesTarefa);
 
     lista.appendChild(item);
   });

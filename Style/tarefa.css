@@ -213,6 +213,8 @@ button {
 .tarefa {
   display: flex;
 
+  height: 100%;
+
   min-width: 0;
 
   align-content: flex-start;
@@ -259,6 +261,20 @@ button {
 
 .tarefa button {
   min-width: 90px;
+}
+
+.acoes-tarefa {
+  display: flex;
+
+  gap: 8px;
+
+  width: 100%;
+
+  margin-top: auto;
+}
+
+.acoes-tarefa button {
+  flex: 1;
 }
 
 .subtarefas {
