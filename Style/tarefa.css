@@ -63,6 +63,14 @@ h1 {
 }
 
 button {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 42px;
+
   padding: 10px 15px;
 
   border: none;
@@ -70,6 +78,10 @@ button {
   border-radius: 5px;
 
   cursor: pointer;
+
+  font-size: 14px;
+
+  line-height: 1.2;
 }
 
 .nova-tarefa button {
@@ -88,6 +100,14 @@ button {
 
 .botao-administracao,
 .botao-secundario {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 42px;
+
   padding: 10px 15px;
 
   border-radius: 5px;
@@ -108,6 +128,10 @@ button {
   background: #6c757d;
 
   color: white;
+
+  font-size: 14px;
+
+  line-height: 1.2;
 }
 
 .botao-tema:hover {
@@ -173,8 +197,6 @@ button {
 }
 
 .botao-sair {
-  margin-top: 20px;
-
   background: #dc3545;
 
   color: white;
