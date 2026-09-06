@@ -28,6 +28,7 @@ tarefas = tarefas.map(function (tarefa) {
     categoria: tarefa.categoria || "geral",
     prazo: tarefa.prazo || "",
     usuario: tarefa.usuario || obterUsuarioAtual() || "admin",
+    subtarefas: Array.isArray(tarefa.subtarefas) ? tarefa.subtarefas : [],
   };
 });
 
@@ -101,6 +102,9 @@ function adicionarTarefa() {
 
     // Relaciona a tarefa ao usuário que a criou.
     usuario: obterUsuarioAtual(),
+
+    // Começa a tarefa sem subtarefas.
+    subtarefas: [],
   };
 
   // Adiciona a tarefa ao conjunto em memória.
@@ -302,12 +306,148 @@ function mostrarTarefas() {
 
     item.appendChild(detalhes);
 
+    // Cria a área de subtarefas da tarefa principal.
+    const areaSubtarefas = document.createElement("div");
+    areaSubtarefas.className = "subtarefas";
+
+    // Exibe o progresso das subtarefas quando existem itens internos.
+    if (tarefa.subtarefas.length > 0) {
+      const subtarefasConcluidas = tarefa.subtarefas.filter(function (subtarefa) {
+        return subtarefa.concluida;
+      }).length;
+      const percentualSubtarefas = Math.round(
+        (subtarefasConcluidas / tarefa.subtarefas.length) * 100,
+      );
+      const progresso = document.createElement("small");
+      const barraProgresso = document.createElement("progress");
+      progresso.className = "progresso-subtarefas";
+      progresso.textContent = `${subtarefasConcluidas}/${tarefa.subtarefas.length} subtarefas concluídas (${percentualSubtarefas}%)`;
+      barraProgresso.className = "barra-subtarefas";
+      barraProgresso.max = 100;
+      barraProgresso.value = percentualSubtarefas;
+      barraProgresso.setAttribute("aria-label", `${percentualSubtarefas}% das subtarefas concluídas`);
+      areaSubtarefas.appendChild(progresso);
+      areaSubtarefas.appendChild(barraProgresso);
+    }
+
+    // Renderiza cada subtarefa dentro do cartão principal.
+    tarefa.subtarefas.forEach(function (subtarefa) {
+      const linhaSubtarefa = document.createElement("div");
+      const checkboxSubtarefa = document.createElement("input");
+      const textoSubtarefa = document.createElement("span");
+      const botaoRemover = document.createElement("button");
+
+      linhaSubtarefa.className = "subtarefa";
+      checkboxSubtarefa.type = "checkbox";
+      checkboxSubtarefa.checked = subtarefa.concluida;
+      checkboxSubtarefa.setAttribute("aria-label", `Concluir subtarefa ${subtarefa.texto}`);
+      textoSubtarefa.textContent = subtarefa.texto;
+      botaoRemover.type = "button";
+      botaoRemover.className = "botao-remover-subtarefa";
+      botaoRemover.textContent = "Remover";
+      botaoRemover.setAttribute("aria-label", `Remover subtarefa ${subtarefa.texto}`);
+
+      checkboxSubtarefa.addEventListener("change", function () {
+        alternarSubtarefa(tarefa.id, subtarefa.id);
+      });
+      botaoRemover.addEventListener("click", function () {
+        removerSubtarefa(tarefa.id, subtarefa.id);
+      });
+
+      linhaSubtarefa.appendChild(checkboxSubtarefa);
+      linhaSubtarefa.appendChild(textoSubtarefa);
+      linhaSubtarefa.appendChild(botaoRemover);
+      areaSubtarefas.appendChild(linhaSubtarefa);
+    });
+
+    // Cria o campo para adicionar uma nova subtarefa.
+    const formularioSubtarefa = document.createElement("form");
+    const inputSubtarefa = document.createElement("input");
+    const botaoSubtarefa = document.createElement("button");
+
+    formularioSubtarefa.className = "form-subtarefa";
+    inputSubtarefa.type = "text";
+    inputSubtarefa.placeholder = "Adicionar subtarefa";
+    inputSubtarefa.setAttribute("aria-label", `Adicionar subtarefa em ${tarefa.texto}`);
+    botaoSubtarefa.type = "submit";
+    botaoSubtarefa.textContent = "Adicionar";
+
+    formularioSubtarefa.addEventListener("submit", function (event) {
+      event.preventDefault();
+      adicionarSubtarefa(tarefa.id, inputSubtarefa.value);
+    });
+
+    formularioSubtarefa.appendChild(inputSubtarefa);
+    formularioSubtarefa.appendChild(botaoSubtarefa);
+    areaSubtarefas.appendChild(formularioSubtarefa);
+    item.appendChild(areaSubtarefas);
+
     item.appendChild(botaoEditar);
 
     item.appendChild(botaoApagar);
 
     lista.appendChild(item);
   });
+}
+
+// Adiciona uma subtarefa dentro da tarefa principal.
+function adicionarSubtarefa(tarefaId, texto) {
+  const textoLimpo = texto.trim();
+  const tarefa = tarefas.find(function (item) {
+    return item.id === tarefaId;
+  });
+
+  if (!tarefa || textoLimpo === "") {
+    return;
+  }
+
+  tarefa.subtarefas.push({
+    id: Date.now(),
+    texto: textoLimpo,
+    concluida: false,
+  });
+  salvarTarefas();
+  mostrarTarefas();
+}
+
+// Alterna o estado de conclusão de uma subtarefa.
+function alternarSubtarefa(tarefaId, subtarefaId) {
+  const tarefa = tarefas.find(function (item) {
+    return item.id === tarefaId;
+  });
+
+  if (!tarefa) {
+    return;
+  }
+
+  const subtarefa = tarefa.subtarefas.find(function (item) {
+    return item.id === subtarefaId;
+  });
+
+  if (!subtarefa) {
+    return;
+  }
+
+  subtarefa.concluida = !subtarefa.concluida;
+  salvarTarefas();
+  mostrarTarefas();
+}
+
+// Remove uma subtarefa da tarefa principal.
+function removerSubtarefa(tarefaId, subtarefaId) {
+  const tarefa = tarefas.find(function (item) {
+    return item.id === tarefaId;
+  });
+
+  if (!tarefa) {
+    return;
+  }
+
+  tarefa.subtarefas = tarefa.subtarefas.filter(function (subtarefa) {
+    return subtarefa.id !== subtarefaId;
+  });
+  salvarTarefas();
+  mostrarTarefas();
 }
 
 // ==========================================

@@ -202,16 +202,28 @@ button {
   margin-bottom: 20px;
 }
 
+#listaTarefas {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+  gap: 16px;
+}
+
 .tarefa {
   display: flex;
 
-  align-items: center;
+  min-width: 0;
 
-  gap: 10px;
+  align-content: flex-start;
+
+  align-items: flex-start;
+
+  flex-direction: column;
+
+  gap: 8px;
 
   padding: 15px;
-
-  margin-bottom: 10px;
 
   background: var(--cor-tarefa);
 
@@ -221,15 +233,15 @@ button {
 }
 
 .tarefa span {
-  flex: 1;
+  width: 100%;
 
-  min-width: 180px;
+  overflow-wrap: anywhere;
+
+  font-weight: bold;
 }
 
 .detalhes-tarefa {
   width: 100%;
-
-  margin-left: 28px;
 
   color: var(--cor-secundaria);
 
@@ -238,6 +250,143 @@ button {
 
 .tarefa.atrasada {
   border-left: 4px solid #dc3545;
+}
+
+.tarefa input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+}
+
+.tarefa button {
+  min-width: 90px;
+}
+
+.subtarefas {
+  width: 100%;
+
+  padding-top: 8px;
+
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.progresso-subtarefas {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: var(--cor-secundaria);
+}
+
+.barra-subtarefas {
+  display: block;
+
+  width: 100%;
+
+  height: 8px;
+
+  margin-bottom: 8px;
+
+  accent-color: #198754;
+}
+
+.subtarefa {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  width: 100%;
+
+  padding: 5px 0;
+
+  cursor: pointer;
+}
+
+.subtarefa input {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}
+
+.subtarefa span {
+  min-width: 0;
+
+  overflow-wrap: anywhere;
+
+  font-size: 13px;
+
+  font-weight: normal;
+}
+
+.subtarefa input:checked + span {
+  text-decoration: line-through;
+
+  opacity: 0.55;
+}
+
+.botao-remover-subtarefa {
+  min-width: auto !important;
+
+  min-height: 28px;
+
+  margin-left: auto;
+
+  padding: 4px 7px;
+
+  background: transparent;
+
+  color: #dc3545;
+
+  font-size: 12px;
+}
+
+.botao-remover-subtarefa:hover {
+  background: #ffe5e5;
+}
+
+.form-subtarefa {
+  display: flex;
+
+  gap: 6px;
+
+  width: 100%;
+
+  margin-top: 8px;
+}
+
+.form-subtarefa input {
+  min-width: 0;
+
+  flex: 1;
+
+  padding: 8px;
+
+  border: 1px solid #ccc;
+
+  border-radius: 5px;
+
+  background: var(--cor-painel);
+
+  color: var(--cor-texto);
+}
+
+.form-subtarefa button {
+  min-width: auto;
+
+  min-height: 36px;
+
+  padding: 7px 10px;
+
+  background: #198754;
+
+  color: white;
+
+  font-size: 13px;
+}
+
+.form-subtarefa button:hover {
+  background: #146c43;
 }
 
 .modal {
@@ -325,7 +474,6 @@ button {
 
   color: white;
 }
-}
 
 .tarefa.concluida span {
   text-decoration: line-through;
@@ -378,11 +526,15 @@ body.tema-escuro {
     display: grid;
   }
 
-  .tarefa button {
-    flex: 1;
-  }
-
   .detalhes-tarefa {
     margin-left: 0;
+  }
+
+  #listaTarefas {
+    grid-template-columns: 1fr;
+  }
+
+  .tarefa {
+    width: 100%;
   }
 }
