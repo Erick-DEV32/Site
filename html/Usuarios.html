@@ -1,47 +1,64 @@
 <!DOCTYPE html>
 
+<!-- Define o documento como HTML5 e informa o idioma usado. -->
 <html lang="pt-BR">
   <head>
+    <!-- Define a codificação de caracteres do documento. -->
     <meta charset="UTF-8">
 
+    <!-- Permite que a interface se adapte a telas menores. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Define o título da página administrativa. -->
     <title>Administração - Gerenciador de Tarefas</title>
 
+    <!-- Carrega os estilos da área de usuários. -->
     <link rel="stylesheet" href="../Style/usuarios.css">
   </head>
 
   <body>
+    <!-- Mantém o conteúdo alinhado e com largura controlada. -->
     <div class="container">
+      <!-- Reúne identificação da página e ações de navegação. -->
       <div class="cabecalho">
         <div>
+          <!-- Indica a seção atual do sistema. -->
           <p class="pre-titulo">Administração</p>
+          <!-- Apresenta o título principal da área. -->
           <h1>Usuários e relatório</h1>
         </div>
 
+        <!-- Agrupa as ações disponíveis para o administrador. -->
         <div class="acoes-cabecalho">
+          <!-- Alterna o tema visual. -->
           <button id="botaoTema" class="botao-tema" type="button" onclick="alternarTema()">
             Tema escuro
           </button>
 
+          <!-- Retorna para o gerenciador de tarefas. -->
           <a class="botao-secundario" href="Tarefas.html">Tarefas</a>
+          <!-- Encerra a sessão. -->
           <button class="botao-sair" type="button" onclick="sair()">Sair</button>
         </div>
       </div>
 
+  <!-- Apresenta os indicadores gerais das tarefas. -->
       <section class="relatorio" aria-labelledby="tituloRelatorio">
         <div class="secao-titulo">
           <h2 id="tituloRelatorio">Relatório geral</h2>
+          <!-- Mostra a quantidade total de tarefas. -->
           <span id="totalTarefas">0 tarefas</span>
         </div>
 
         <div class="indicadores">
+          <!-- Indicadores de tarefas concluídas. -->
           <div class="indicador">
             <span>Concluídas</span>
             <strong id="tarefasConcluidas">0</strong>
             <small id="percentualConcluidas">0%</small>
           </div>
 
+          <!-- Indicadores de tarefas pendentes. -->
           <div class="indicador">
             <span>Pendentes</span>
             <strong id="tarefasPendentes">0</strong>
@@ -50,12 +67,15 @@
         </div>
       </section>
 
+  <!-- Apresenta a pesquisa, o cadastro e a lista de usuários. -->
       <section class="usuarios" aria-labelledby="tituloUsuarios">
         <div class="secao-titulo">
           <h2 id="tituloUsuarios">Usuários cadastrados</h2>
+          <!-- Mostra a quantidade total de usuários. -->
           <span id="totalUsuarios">0 usuários</span>
         </div>
 
+  <!-- Permite localizar usuários por nome, perfil ou status. -->
         <div class="pesquisa-usuarios">
           <label for="pesquisaUsuarios">Pesquisar usuários</label>
           <input
@@ -64,17 +84,21 @@
             placeholder="Nome ou perfil">
         </div>
 
+        <!-- Formulário para cadastrar um novo usuário. -->
         <form id="formUsuario" class="form-usuario">
+          <!-- Campo do nome de usuário. -->
           <div class="campo">
             <label for="novoUsuario">Usuário</label>
             <input id="novoUsuario" type="text" required>
           </div>
 
+          <!-- Campo da senha do novo usuário. -->
           <div class="campo">
             <label for="novaSenha">Senha</label>
             <input id="novaSenha" type="password" required autocomplete="new-password">
           </div>
 
+          <!-- Seleciona o perfil de acesso. -->
           <div class="campo">
             <label for="novoPerfil">Perfil</label>
             <select id="novoPerfil">
@@ -83,6 +107,7 @@
             </select>
           </div>
 
+          <!-- Seleciona o estado inicial da conta. -->
           <div class="campo">
             <label for="novoStatus">Status</label>
             <select id="novoStatus">
@@ -91,17 +116,23 @@
             </select>
           </div>
 
+          <!-- Envia os dados para o cadastro. -->
           <button type="submit">Cadastrar usuário</button>
         </form>
 
+        <!-- Recebe mensagens do cadastro e das ações administrativas. -->
         <p id="mensagem" class="mensagem" aria-live="polite"></p>
 
+        <!-- Recebe dinamicamente os usuários cadastrados. -->
         <div id="listaUsuarios" class="lista-usuarios"></div>
       </section>
     </div>
 
+    <!-- Carrega a lógica de tema. -->
     <script src="../javascript/tema.js"></script>
+    <!-- Carrega a autenticação e proteção da página. -->
     <script src="../javascript/auth.js"></script>
+    <!-- Carrega as funções administrativas. -->
     <script src="../javascript/usuarios.js"></script>
   </body>
 </html>

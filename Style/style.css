@@ -1,4 +1,5 @@
 * {
+  /* Remove os espaçamentos padrão e padroniza o cálculo das dimensões. */
 
   margin: 0;
 
@@ -9,6 +10,7 @@
 }
 
 :root {
+  /* Define as cores reutilizadas pela tela de login. */
   --cor-fundo: #f4f4f4;
   --cor-painel: white;
   --cor-texto: #222;
@@ -17,6 +19,7 @@
 }
 
 body {
+  /* Define a tipografia, o fundo e a cor padrão da página. */
 
 
 font-family: Arial, sans-serif;
@@ -29,6 +32,7 @@ color: var(--cor-texto);
 }
 
 .container {
+  /* Centraliza o cartão de login na área disponível. */
 
 
 width: 100%;
@@ -45,6 +49,7 @@ align-items: center;
 }
 
 .login-box {
+  /* Estiliza o painel que contém o formulário. */
 
 
 background: var(--cor-painel);
@@ -65,6 +70,7 @@ box-shadow:
 }
 
 .login-box h1 {
+  /* Centraliza o título do login e cria espaço abaixo dele. */
 
 
 text-align: center;
@@ -75,6 +81,7 @@ margin-bottom: 10px;
 }
 
 .login-box p {
+  /* Centraliza o texto de orientação do formulário. */
 
 
 text-align: center;
@@ -87,6 +94,7 @@ color: var(--cor-secundaria);
 }
 
 .campo {
+  /* Cria espaço vertical entre os campos. */
 
 
 margin-bottom: 20px;
@@ -95,6 +103,7 @@ margin-bottom: 20px;
 }
 
 .campo label {
+  /* Coloca o rótulo acima do respectivo campo. */
 
 
 display: block;
@@ -107,6 +116,7 @@ font-weight: bold;
 }
 
 .campo input {
+  /* Define largura, altura interna e tipografia dos campos. */
 
 
 width: 100%;
@@ -123,6 +133,7 @@ font-size: 16px;
 }
 
 .botao-tema {
+  /* Ajusta o botão de tema para seu conteúdo e o centraliza. */
   width: auto;
 
   display: flex;
@@ -139,10 +150,12 @@ font-size: 16px;
 }
 
 .botao-tema:hover {
+  /* Escurece o botão quando o cursor passa sobre ele. */
   background: #545b62;
 }
 
 body.tema-escuro {
+  /* Substitui as cores principais no tema escuro. */
   --cor-fundo: #202124;
   --cor-painel: #2d2f33;
   --cor-texto: #f1f3f4;
@@ -151,6 +164,7 @@ body.tema-escuro {
 }
 
 body.tema-escuro .campo input {
+  /* Mantém os campos legíveis no tema escuro. */
   background: #202124;
 
   color: var(--cor-texto);
@@ -159,6 +173,7 @@ body.tema-escuro .campo input {
 }
 
 .campo input:focus {
+  /* Destaca o campo atualmente selecionado. */
 
 
 outline: none;
@@ -169,6 +184,7 @@ border-color: #007bff;
 }
 
 button {
+  /* Padroniza tamanho, alinhamento e aparência dos botões. */
 
 
 width: 100%;
@@ -201,6 +217,7 @@ line-height: 1.2;
 }
 
 button:hover {
+  /* Escurece os botões durante a interação. */
 
 
 background: #0056b3;
@@ -209,6 +226,7 @@ background: #0056b3;
 }
 
 #mensagem {
+  /* Reserva espaço para mensagens de retorno do login. */
 
 
 margin-top: 15px;

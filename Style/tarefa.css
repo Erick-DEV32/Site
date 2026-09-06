@@ -66,6 +66,7 @@ button {
   display: inline-flex;
 
   align-items: center;
+    /* Define as cores compartilhadas pela página de tarefas. */
 
   justify-content: center;
 
@@ -74,6 +75,7 @@ button {
   padding: 10px 15px;
 
   border: none;
+    /* Remove a margem padrão e define fundo e tipografia. */
 
   border-radius: 5px;
 
@@ -81,6 +83,7 @@ button {
 
   font-size: 14px;
 
+    /* Limita a largura, centraliza e cria o painel principal. */
   line-height: 1.2;
 }
 
@@ -89,6 +92,7 @@ button {
 
   color: white;
 }
+    /* Alinha o título e os controles do cabeçalho. */
 
 .acoes-cabecalho {
   display: flex;
@@ -97,21 +101,25 @@ button {
 
   justify-content: center;
 }
+    /* Remove a margem padrão do título. */
 
 .botao-administracao,
 .botao-secundario {
   display: inline-flex;
+    /* Organiza o campo e o botão de nova tarefa. */
 
   align-items: center;
 
   justify-content: center;
 
   min-height: 42px;
+    /* Define o espaçamento interno do campo de nova tarefa. */
 
   padding: 10px 15px;
 
   border-radius: 5px;
 
+    /* Aplica dimensões e alinhamento comuns aos botões. */
   background: #198754;
 
   color: white;
@@ -130,6 +138,7 @@ button {
   color: white;
 
   font-size: 14px;
+    /* Organiza os botões de navegação do cabeçalho. */
 
   line-height: 1.2;
 }
@@ -137,6 +146,7 @@ button {
 .botao-tema:hover {
   background: #545b62;
 }
+    /* Faz os links administrativos se comportarem como botões. */
 
 .resumo-tarefas {
   margin-bottom: 20px;
@@ -150,10 +160,12 @@ button {
 
 .pesquisa-tarefas {
   margin-bottom: 20px;
+    /* Define o estado visual de interação dos links. */
 }
 
 .pesquisa-tarefas label {
   display: block;
+    /* Aplica a cor neutra ao botão de tema. */
 
   margin-bottom: 6px;
 
@@ -165,6 +177,7 @@ button {
 
   padding: 12px;
 
+    /* Reserva espaço e centraliza o resumo numérico. */
   border: 1px solid #ccc;
 
   border-radius: 5px;
@@ -172,16 +185,19 @@ button {
 
 .tarefa {
   display: flex;
+    /* Cria espaço abaixo da área de pesquisa. */
 
   align-items: center;
 
   gap: 10px;
+    /* Coloca o rótulo da pesquisa acima do campo. */
 
   padding: 15px;
 
   margin-bottom: 10px;
 
   background: var(--cor-tarefa);
+    /* Ocupa toda a largura disponível para facilitar a pesquisa. */
 
   border-radius: 5px;
 }
@@ -189,6 +205,7 @@ button {
 .tarefa span {
   flex: 1;
 }
+    /* Organiza cada tarefa em uma linha com seus controles. */
 
 .tarefa.concluida span {
   text-decoration: line-through;
@@ -199,15 +216,18 @@ button {
 .botao-sair {
   background: #dc3545;
 
+    /* Faz o texto ocupar o espaço livre da linha. */
   color: white;
 }
 
 body.tema-escuro {
+    /* Risca e suaviza visualmente uma tarefa concluída. */
   --cor-fundo: #202124;
   --cor-painel: #2d2f33;
   --cor-texto: #f1f3f4;
   --cor-secundaria: #c7c9cc;
   --cor-tarefa: #3a3d42;
+    /* Aplica a cor de destaque ao botão de saída. */
 }
 
 @media (max-width: 650px) {
@@ -221,5 +241,6 @@ body.tema-escuro {
   .acoes-cabecalho button,
   .acoes-cabecalho a {
     text-align: center;
+    /* Empilha cabeçalho e ações em telas estreitas. */
   }
 }

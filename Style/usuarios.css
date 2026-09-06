@@ -1,4 +1,5 @@
 :root {
+  /* Define a paleta reutilizada pela área administrativa. */
   --cor-fundo: #f4f4f4;
   --cor-painel: white;
   --cor-texto: #222;
@@ -8,10 +9,12 @@
 }
 
 * {
+  /* Faz todos os elementos calcularem dimensões de forma previsível. */
   box-sizing: border-box;
 }
 
 body {
+  /* Define fundo, espaçamento e tipografia da página. */
   margin: 0;
   padding: 30px 16px;
   background: var(--cor-fundo);
@@ -20,12 +23,14 @@ body {
 }
 
 .container {
+  /* Centraliza o conteúdo e limita sua largura máxima. */
   max-width: 900px;
   margin: 0 auto;
 }
 
 .cabecalho,
 .secao-titulo {
+  /* Alinha títulos e ações das áreas administrativas. */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -33,15 +38,18 @@ body {
 }
 
 .cabecalho {
+  /* Cria espaço abaixo do cabeçalho principal. */
   margin-bottom: 25px;
 }
 
 .cabecalho h1,
 .secao-titulo h2 {
+  /* Remove as margens padrão dos títulos. */
   margin: 0;
 }
 
 .pre-titulo {
+  /* Diferencia o rótulo superior da área administrativa. */
   margin: 0 0 6px;
   color: #198754;
   font-weight: bold;
@@ -49,6 +57,7 @@ body {
 }
 
 .acoes-cabecalho {
+  /* Organiza as ações do cabeçalho em linha. */
   display: flex;
   align-items: center;
   gap: 10px;
@@ -56,6 +65,7 @@ body {
 
 button,
 .botao-secundario {
+  /* Padroniza botões e links de ação. */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -69,16 +79,19 @@ button,
 }
 
 .botao-secundario {
+  /* Define a aparência do link para a tela de tarefas. */
   background: #198754;
   color: white;
   text-decoration: none;
 }
 
 .botao-secundario:hover {
+  /* Escurece o link durante a interação. */
   background: #146c43;
 }
 
 .botao-tema {
+  /* Define a aparência do botão de tema. */
   background: #6c757d;
   color: white;
 }
@@ -88,11 +101,13 @@ button,
 }
 
 .botao-sair {
+  /* Define a aparência do botão de saída. */
   background: #dc3545;
   color: white;
 }
 
 section {
+  /* Organiza cada seção como um painel visual. */
   margin-bottom: 25px;
   padding: 25px;
   background: var(--cor-painel);
@@ -100,25 +115,30 @@ section {
 }
 
 .secao-titulo {
+  /* Alinha o título e o contador de cada seção. */
   margin-bottom: 20px;
 }
 
 .secao-titulo span {
+  /* Diferencia visualmente os contadores auxiliares. */
   color: var(--cor-secundaria);
   font-size: 14px;
 }
 
 .pesquisa-usuarios {
+  /* Cria espaço abaixo da pesquisa de usuários. */
   margin-bottom: 20px;
 }
 
 .pesquisa-usuarios label {
+  /* Coloca o rótulo acima do campo de pesquisa. */
   display: block;
   margin-bottom: 6px;
   font-weight: bold;
 }
 
 .pesquisa-usuarios input {
+  /* Define o campo de pesquisa e sua aparência. */
   width: 100%;
   padding: 11px;
   border: 1px solid var(--cor-borda);
@@ -128,12 +148,14 @@ section {
 }
 
 .indicadores {
+  /* Organiza os indicadores em duas colunas. */
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 15px;
 }
 
 .indicador {
+  /* Estiliza cada indicador numérico. */
   padding: 20px;
   background: var(--cor-item);
   border-left: 4px solid #198754;
@@ -141,21 +163,25 @@ section {
 
 .indicador span,
 .indicador small {
+  /* Empilha os textos auxiliares do indicador. */
   display: block;
   color: var(--cor-secundaria);
 }
 
 .indicador strong {
+  /* Destaca o número principal do indicador. */
   display: block;
   margin: 8px 0;
   font-size: 30px;
 }
 
 .indicador small {
+  /* Realça a legenda inferior dos indicadores. */
   font-weight: bold;
 }
 
 .form-usuario {
+  /* Organiza os campos do cadastro em colunas. */
   display: grid;
   grid-template-columns: 1fr 1fr 160px 140px auto;
   align-items: end;
@@ -163,6 +189,7 @@ section {
 }
 
 .campo label {
+  /* Coloca os rótulos acima dos campos. */
   display: block;
   margin-bottom: 6px;
   font-weight: bold;
@@ -170,6 +197,7 @@ section {
 
 .campo input,
 .campo select {
+  /* Padroniza entradas e seleções do cadastro. */
   width: 100%;
   padding: 11px;
   border: 1px solid var(--cor-borda);
@@ -179,15 +207,18 @@ section {
 }
 
 .form-usuario button {
+  /* Define a cor da ação de cadastro. */
   background: #007bff;
   color: white;
 }
 
 .form-usuario button:hover {
+  /* Escurece o botão de cadastro durante a interação. */
   background: #0056b3;
 }
 
 .mensagem {
+  /* Reserva espaço para mensagens administrativas. */
   min-height: 20px;
   margin: 15px 0 0;
   color: #198754;
@@ -195,19 +226,23 @@ section {
 }
 
 .mensagem.erro {
+  /* Usa vermelho para mensagens de erro. */
   color: #dc3545;
 }
 
 .lista-usuarios {
+  /* Separa visualmente a lista do formulário. */
   margin-top: 10px;
   border-top: 1px solid var(--cor-borda);
 }
 
 .sem-usuarios {
+  /* Define a cor de uma lista sem resultados. */
   color: var(--cor-secundaria);
 }
 
 .usuario-item {
+  /* Organiza cada usuário com seus controles. */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -218,11 +253,13 @@ section {
 
 .dados-usuario strong,
 .dados-usuario span {
+  /* Empilha nome, perfil e status. */
   display: block;
 }
 
 .dados-usuario span,
 .usuario-protegido {
+  /* Estiliza informações auxiliares e contas protegidas. */
   margin-top: 4px;
   color: var(--cor-secundaria);
   font-size: 13px;
@@ -230,32 +267,39 @@ section {
 
 .status-ativo,
 .status-inativo {
+  /* Destaca visualmente os estados das contas. */
   font-weight: bold;
 }
 
 .status-ativo {
+  /* Usa verde para contas ativas. */
   color: #198754 !important;
 }
 
 .status-inativo {
+  /* Usa vermelho para contas inativas. */
   color: #dc3545 !important;
 }
 
 .botao-status {
+  /* Define a aparência do botão de ativação. */
   background: #6c757d;
   color: white;
 }
 
 .botao-status:hover {
+  /* Escurece o botão de status durante a interação. */
   background: #545b62;
 }
 
 .botao-excluir {
+  /* Define a aparência da ação de exclusão. */
   background: #dc3545;
   color: white;
 }
 
 body.tema-escuro {
+  /* Substitui as cores para o tema escuro. */
   --cor-fundo: #202124;
   --cor-painel: #2d2f33;
   --cor-texto: #f1f3f4;
@@ -265,6 +309,7 @@ body.tema-escuro {
 }
 
 @media (max-width: 750px) {
+  /* Adapta cabeçalho, formulário e ações para telas médias. */
   .cabecalho,
   .acoes-cabecalho {
     align-items: stretch;
@@ -286,6 +331,7 @@ body.tema-escuro {
 }
 
 @media (max-width: 500px) {
+  /* Reduz os grids para uma coluna em telas pequenas. */
   .indicadores,
   .form-usuario {
     grid-template-columns: 1fr;
