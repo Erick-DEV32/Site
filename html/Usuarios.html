@@ -111,13 +111,13 @@
           <!-- Campo do nome de usuário. -->
           <div class="campo">
             <label for="novoUsuario">Usuário</label>
-            <input id="novoUsuario" type="text" required>
+            <input id="novoUsuario" type="text" minlength="3" maxlength="30" pattern="[A-Za-z0-9._-]+" required>
           </div>
 
           <!-- Campo da senha do novo usuário. -->
           <div class="campo">
             <label for="novaSenha">Senha</label>
-            <input id="novaSenha" type="password" required autocomplete="new-password">
+            <input id="novaSenha" type="password" minlength="6" required autocomplete="new-password">
           </div>
 
           <!-- Seleciona o perfil de acesso. -->

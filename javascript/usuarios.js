@@ -27,7 +27,14 @@ function mostrarMensagem(texto, erro) {
 // Calcula e exibe os números gerais das tarefas.
 function mostrarRelatorio() {
   // Recupera as tarefas salvas ou inicia uma lista vazia.
-  const tarefas = JSON.parse(localStorage.getItem("tarefas")) || [];
+  let tarefas = [];
+
+  try {
+    const tarefasSalvas = JSON.parse(localStorage.getItem("tarefas"));
+    tarefas = Array.isArray(tarefasSalvas) ? tarefasSalvas : [];
+  } catch (erro) {
+    tarefas = [];
+  }
   // Conta as tarefas concluídas.
   const concluidas = tarefas.filter(function (tarefa) {
     return tarefa.concluida;
@@ -286,6 +293,16 @@ formularioUsuario.addEventListener("submit", function (event) {
   const status = document.getElementById("novoStatus").value;
   const usuarios = carregarUsuarios();
 
+  if (!/^[A-Za-z0-9._-]{3,30}$/.test(nomeUsuario)) {
+    mostrarMensagem("Use de 3 a 30 caracteres: letras, números, ponto, hífen ou sublinhado.", true);
+    return;
+  }
+
+  if (senha.length < 6) {
+    mostrarMensagem("A senha precisa ter pelo menos 6 caracteres.", true);
+    return;
+  }
+
   // Atualiza um cadastro existente quando o formulário está no modo de edição.
   if (usuarioEmEdicao) {
     const usuario = usuarios.find(function (item) {
@@ -315,7 +332,15 @@ formularioUsuario.addEventListener("submit", function (event) {
       }
     });
 
-    const tarefas = JSON.parse(localStorage.getItem("tarefas")) || [];
+    let tarefas = [];
+
+    try {
+      const tarefasSalvas = JSON.parse(localStorage.getItem("tarefas"));
+      tarefas = Array.isArray(tarefasSalvas) ? tarefasSalvas : [];
+    } catch (erro) {
+      tarefas = [];
+    }
+
     tarefas.forEach(function (tarefa) {
       if (tarefa.usuario === usuarioEmEdicao) {
         tarefa.usuario = nomeUsuario;

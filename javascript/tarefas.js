@@ -17,8 +17,31 @@ if (!usuarioEhAdmin()) {
 // CARREGAR TAREFAS
 // ==========================================
 
+// Recupera as tarefas salvas sem derrubar a página quando o JSON estiver inválido.
+function carregarTarefas() {
+  try {
+    const tarefasSalvas = JSON.parse(localStorage.getItem("tarefas"));
+    return Array.isArray(tarefasSalvas) ? tarefasSalvas : [];
+  } catch (erro) {
+    return [];
+  }
+}
+
+// Mantém a sessão atual e define se o usuário pode visualizar todas as tarefas.
+const usuarioAtual = obterUsuarioAtual();
+const visualizaTodasTarefas = usuarioEhAdmin();
+
 // Recupera as tarefas salvas ou começa com uma lista vazia.
-let tarefas = JSON.parse(localStorage.getItem("tarefas")) || [];
+let tarefas = carregarTarefas();
+
+// Limita a visualização às tarefas do usuário, exceto para administradores.
+function obterTarefasVisiveis() {
+  return visualizaTodasTarefas
+    ? tarefas
+    : tarefas.filter(function (tarefa) {
+      return tarefa.usuario === usuarioAtual;
+    });
+}
 
 // Define valores padrão para tarefas criadas antes dos novos campos.
 tarefas = tarefas.map(function (tarefa) {
@@ -27,7 +50,7 @@ tarefas = tarefas.map(function (tarefa) {
     prioridade: tarefa.prioridade || "media",
     categoria: tarefa.categoria || "geral",
     prazo: tarefa.prazo || "",
-    usuario: tarefa.usuario || obterUsuarioAtual() || "admin",
+    usuario: tarefa.usuario || usuarioAtual || "admin",
     subtarefas: Array.isArray(tarefa.subtarefas) ? tarefa.subtarefas : [],
   };
 });
@@ -45,6 +68,7 @@ const pesoPrioridade = {
 // Guarda a ação e a tarefa atualmente abertas no modal.
 let acaoModal = null;
 let tarefaModalId = null;
+let elementoFocoAntesModal = null;
 
 // Devolve a data atual no formato usado pelo campo date.
 function obterDataAtual() {
@@ -76,6 +100,12 @@ function adicionarTarefa() {
   // Interrompe a operação quando não há texto válido.
   if (texto === "") {
     abrirModal("A tarefa precisa de um texto", "Digite uma descrição antes de adicionar.", null, false);
+
+    return;
+  }
+
+  if (prazo && prazo < obterDataAtual()) {
+    abrirModal("Prazo inválido", "Escolha a data de hoje ou uma data futura.", null, false);
 
     return;
   }
@@ -145,22 +175,23 @@ function mostrarTarefas() {
   const ordenacao = document.getElementById("ordenacaoTarefas").value;
 
   // Conta quantas tarefas estão concluídas.
-  const concluidas = tarefas.filter(function (tarefa) {
+  const tarefasVisiveis = obterTarefasVisiveis();
+  const concluidas = tarefasVisiveis.filter(function (tarefa) {
     return tarefa.concluida;
   }).length;
 
   // Calcula as pendentes como o total menos as concluídas.
-  const pendentes = tarefas.length - concluidas;
+  const pendentes = tarefasVisiveis.length - concluidas;
 
   // Calcula o percentual concluído, evitando divisão por zero.
-  const percentualConcluidas = tarefas.length === 0
+  const percentualConcluidas = tarefasVisiveis.length === 0
     ? 0
-    : Math.round((concluidas / tarefas.length) * 100);
+    : Math.round((concluidas / tarefasVisiveis.length) * 100);
 
   // Calcula o percentual pendente, também tratando a lista vazia.
-  const percentualPendentes = tarefas.length === 0
+  const percentualPendentes = tarefasVisiveis.length === 0
     ? 0
-    : Math.round((pendentes / tarefas.length) * 100);
+    : Math.round((pendentes / tarefasVisiveis.length) * 100);
 
   // Exibe os números resumidos para o usuário.
   resumo.textContent = `Concluídas: ${concluidas} (${percentualConcluidas}%) | Pendentes: ${pendentes} (${percentualPendentes}%)`;
@@ -169,7 +200,7 @@ function mostrarTarefas() {
   lista.innerHTML = "";
 
   // Informa quando ainda não existe nenhuma tarefa cadastrada.
-  if (tarefas.length === 0) {
+  if (tarefasVisiveis.length === 0) {
     lista.innerHTML = `
 
         <p class="sem-tarefas">
@@ -184,7 +215,7 @@ function mostrarTarefas() {
   }
 
   // Mantém apenas as tarefas compatíveis com pesquisa e filtros selecionados.
-  const tarefasFiltradas = tarefas.filter(function (tarefa) {
+  const tarefasFiltradas = tarefasVisiveis.filter(function (tarefa) {
     const correspondeTexto = tarefa.texto.toLowerCase().includes(termoPesquisa);
     const correspondeStatus = filtroStatus === "todas"
       || (filtroStatus === "pendentes" && !tarefa.concluida)
@@ -533,6 +564,8 @@ function abrirModal(titulo, mensagem, tarefa, permiteTexto) {
   const valor = document.getElementById("valorModal");
   const rotulo = document.getElementById("rotuloModal");
 
+  elementoFocoAntesModal = document.activeElement;
+
   document.getElementById("tituloModal").textContent = titulo;
   document.getElementById("mensagemModal").textContent = mensagem;
   acaoModal = permiteTexto ? "editar" : tarefa ? "excluir" : "aviso";
@@ -555,6 +588,12 @@ function fecharModal() {
   document.getElementById("modalTarefa").hidden = true;
   acaoModal = null;
   tarefaModalId = null;
+
+  if (elementoFocoAntesModal && typeof elementoFocoAntesModal.focus === "function") {
+    elementoFocoAntesModal.focus();
+  }
+
+  elementoFocoAntesModal = null;
 }
 
 // Executa a ação escolhida no modal.
@@ -608,6 +647,7 @@ const filtroStatus = document.getElementById("filtroStatus");
 const filtroPrioridade = document.getElementById("filtroPrioridade");
 const filtroCategoria = document.getElementById("filtroCategoria");
 const ordenacaoTarefas = document.getElementById("ordenacaoTarefas");
+document.getElementById("prazoTarefa").min = obterDataAtual();
 
 // Permite cadastrar a tarefa pressionando Enter.
 inputTarefa.addEventListener("keypress", function (event) {
@@ -638,8 +678,33 @@ document.getElementById("modalTarefa").addEventListener("click", function (event
 
 // Permite fechar o modal usando a tecla Escape.
 document.addEventListener("keydown", function (event) {
-  if (event.key === "Escape" && !document.getElementById("modalTarefa").hidden) {
+  const modal = document.getElementById("modalTarefa");
+
+  if (modal.hidden) {
+    return;
+  }
+
+  if (event.key === "Escape") {
     fecharModal();
+    return;
+  }
+
+  if (event.key !== "Tab") {
+    return;
+  }
+
+  const elementosFocaveis = modal.querySelectorAll(
+    "button:not([hidden]), input:not([hidden]), [href], select, textarea",
+  );
+  const primeiroElemento = elementosFocaveis[0];
+  const ultimoElemento = elementosFocaveis[elementosFocaveis.length - 1];
+
+  if (event.shiftKey && document.activeElement === primeiroElemento) {
+    event.preventDefault();
+    ultimoElemento.focus();
+  } else if (!event.shiftKey && document.activeElement === ultimoElemento) {
+    event.preventDefault();
+    primeiroElemento.focus();
   }
 });
 
