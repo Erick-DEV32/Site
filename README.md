@@ -23,6 +23,22 @@ Aplicacao de gerenciamento de tarefas feita com HTML, CSS e JavaScript puro.
 
 Os dados ficam no `localStorage` do navegador. Isso e adequado para demonstracao local, mas nao para producao.
 
+## Versao React
+
+Uma interface React foi adicionada em `react/`. Ela usa os mesmos dados do `localStorage`.
+
+Essa versao inclui dashboard responsivo, tema claro/escuro, filtros de tarefas, relatorio, cadastro de usuarios e controle de status.
+
+Para executar a versao React:
+
+```text
+cd react
+npm install
+npm run dev
+```
+
+Para gerar a versao de producao, use `npm run build` dentro de `react/`.
+
 ## Estrutura
 
 ```text
