@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 
+// Usuário criado automaticamente quando o navegador ainda não possui cadastros.
 const initialUsers = [
   { usuario: "admin", senha: "123", perfil: "admin", status: "ativo" },
 ];
 
+// Lê JSON do localStorage sem interromper a aplicação quando o conteúdo estiver inválido.
 function readStorage(key, fallback) {
   try {
     const value = JSON.parse(localStorage.getItem(key));
@@ -13,6 +15,7 @@ function readStorage(key, fallback) {
   }
 }
 
+// Carrega usuários e adiciona status ativo aos registros antigos.
 function getUsers() {
   const users = readStorage("usuarios", initialUsers);
   const normalizedUsers =
@@ -24,37 +27,48 @@ function getUsers() {
   }));
 }
 
+// Carrega as tarefas existentes ou inicia uma lista vazia.
 function getTasks() {
   const tasks = readStorage("tarefas", []);
   return Array.isArray(tasks) ? tasks : [];
 }
 
+// Componente raiz: concentra sessão, tema, dados persistidos e navegação.
 function App() {
+  // O tema é mantido entre recarregamentos do navegador.
   const [theme, setTheme] = useState(localStorage.getItem("tema") || "claro");
+  // Recupera a identidade da sessão atual e trata o valor legado "true".
   const [currentUser, setCurrentUser] = useState(() => {
     const savedUser = localStorage.getItem("usuarioLogado");
     return savedUser === "true" ? "admin" : savedUser;
   });
+  // Define qual área do painel está visível.
   const [view, setView] = useState("dashboard");
+  // Estados principais da aplicação, carregados uma vez na inicialização.
   const [tasks, setTasks] = useState(getTasks);
   const [users, setUsers] = useState(getUsers);
 
+  // Aplica o tema no elemento body e salva a preferência.
   useEffect(() => {
     document.body.dataset.theme = theme;
     localStorage.setItem("tema", theme);
   }, [theme]);
 
+  // Persiste toda alteração feita nas tarefas.
   useEffect(() => {
     localStorage.setItem("tarefas", JSON.stringify(tasks));
   }, [tasks]);
 
+  // Persiste toda alteração feita nos usuários.
   useEffect(() => {
     localStorage.setItem("usuarios", JSON.stringify(users));
   }, [users]);
 
+  // Localiza o cadastro associado à sessão para definir permissões.
   const loggedUser = users.find((user) => user.usuario === currentUser);
   const isAdmin = loggedUser?.perfil === "admin";
 
+  // Valida as credenciais e inicia uma sessão ativa.
   function login(username, password) {
     const user = users.find(
       (item) => item.usuario === username && item.senha === password,
@@ -68,11 +82,13 @@ function App() {
     return "";
   }
 
+  // Encerra a sessão e retorna ao formulário de login.
   function logout() {
     localStorage.removeItem("usuarioLogado");
     setCurrentUser(null);
   }
 
+  // Usuários sem sessão válida só podem visualizar o login.
   if (!currentUser || !loggedUser) {
     return (
       <Login
@@ -138,11 +154,13 @@ function App() {
   );
 }
 
+// Tela de autenticação e alternância do tema.
 function Login({ onLogin, theme, onTheme }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  // Envia as credenciais para o componente raiz.
   function submit(event) {
     event.preventDefault();
     const message = onLogin(username.trim(), password);
@@ -200,6 +218,7 @@ function Login({ onLogin, theme, onTheme }) {
   );
 }
 
+// Navegação lateral, com menus administrativos condicionais ao perfil.
 function Sidebar({ view, setView, isAdmin, onLogout }) {
   return (
     <aside className="sidebar">
@@ -240,16 +259,20 @@ function Sidebar({ view, setView, isAdmin, onLogout }) {
   );
 }
 
+// Área de tarefas: filtros, indicadores, cadastro e lista.
 function TaskView({ tasks, setTasks, currentUser, isAdmin }) {
+  // Filtros controlados pela interface.
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("todas");
   const [newTask, setNewTask] = useState("");
   const [newPriority, setNewPriority] = useState("media");
   const [newCategory, setNewCategory] = useState("geral");
   const [newDeadline, setNewDeadline] = useState("");
+  // Administradores veem tudo; usuários comuns veem apenas suas tarefas.
   const visibleTasks = isAdmin
     ? tasks
     : tasks.filter((task) => task.usuario === currentUser);
+  // Aplica a busca textual e o filtro de status antes da renderização.
   const filtered = visibleTasks.filter((task) => {
     const matchesQuery = task.texto.toLowerCase().includes(query.toLowerCase());
     const matchesStatus =
@@ -262,6 +285,7 @@ function TaskView({ tasks, setTasks, currentUser, isAdmin }) {
     ? Math.round((done / visibleTasks.length) * 100)
     : 0;
 
+  // Cria uma tarefa com seus metadados e uma coleção vazia de subtarefas.
   function addTask(event) {
     event.preventDefault();
     if (!newTask.trim()) return;
@@ -284,6 +308,7 @@ function TaskView({ tasks, setTasks, currentUser, isAdmin }) {
     setNewDeadline("");
   }
 
+  // Alterna uma tarefa entre concluída e pendente.
   function toggleTask(id) {
     setTasks(
       tasks.map((task) =>
@@ -291,14 +316,17 @@ function TaskView({ tasks, setTasks, currentUser, isAdmin }) {
       ),
     );
   }
+  // Remove a tarefa pelo identificador.
   function removeTask(id) {
     setTasks(tasks.filter((task) => task.id !== id));
   }
+  // Atualiza somente os campos alterados, preservando os demais.
   function updateTask(id, changes) {
     setTasks(
       tasks.map((task) => (task.id === id ? { ...task, ...changes } : task)),
     );
   }
+  // Adiciona uma subtarefa dentro da tarefa principal.
   function addSubtask(task, text) {
     const texto = text.trim();
 
@@ -311,6 +339,7 @@ function TaskView({ tasks, setTasks, currentUser, isAdmin }) {
       ],
     });
   }
+  // Alterna a conclusão de uma subtarefa específica.
   function toggleSubtask(task, subtaskId) {
     updateTask(task.id, {
       subtarefas: (task.subtarefas || []).map((subtask) =>
@@ -320,6 +349,7 @@ function TaskView({ tasks, setTasks, currentUser, isAdmin }) {
       ),
     });
   }
+  // Remove uma subtarefa sem remover a tarefa principal.
   function removeSubtask(task, subtaskId) {
     updateTask(task.id, {
       subtarefas: (task.subtarefas || []).filter(
@@ -453,6 +483,7 @@ function TaskView({ tasks, setTasks, currentUser, isAdmin }) {
   );
 }
 
+// Cartão de tarefa com edição, subtarefas e ações de status.
 function TaskCard({
   task,
   onToggle,
@@ -468,6 +499,7 @@ function TaskCard({
   const [editPriority, setEditPriority] = useState(task.prioridade || "media");
   const [editCategory, setEditCategory] = useState(task.categoria || "geral");
   const [editDeadline, setEditDeadline] = useState(task.prazo || "");
+  // Garante compatibilidade com tarefas antigas sem subtarefas.
   const subtasks = Array.isArray(task.subtarefas) ? task.subtarefas : [];
   const completedSubtasks = subtasks.filter(
     (subtask) => subtask.concluida,
@@ -476,6 +508,7 @@ function TaskCard({
     ? Math.round((completedSubtasks / subtasks.length) * 100)
     : 0;
 
+  // Envia o formulário de nova subtarefa e limpa o campo.
   function submitSubtask(event) {
     event.preventDefault();
     onAddSubtask(task, subtaskText);
@@ -636,10 +669,12 @@ function TaskCard({
   );
 }
 
+// Formata o resumo numérico exibido ao lado de "Subtarefas".
 function SubtasksLabel(completed, total, progress) {
   return total > 0 ? ` ${completed}/${total} · ${progress}%` : "";
 }
 
+// Área administrativa de consulta, cadastro, edição e status de usuários.
 function UsersView({ users, setUsers }) {
   const [query, setQuery] = useState("");
   const [name, setName] = useState("");
@@ -650,6 +685,7 @@ function UsersView({ users, setUsers }) {
   const filtered = users.filter((user) =>
     user.usuario.toLowerCase().includes(query.toLowerCase()),
   );
+  // Limpa o formulário e sai do modo de edição.
   function resetForm() {
     setName("");
     setPassword("");
@@ -658,6 +694,7 @@ function UsersView({ users, setUsers }) {
     setEditingUser(null);
   }
 
+  // Decide entre criar um cadastro ou salvar uma edição existente.
   function submitUser(event) {
     event.preventDefault();
     const username = name.trim();
@@ -691,6 +728,7 @@ function UsersView({ users, setUsers }) {
     resetForm();
   }
 
+  // Preenche o formulário com os dados do usuário escolhido.
   function startEditing(user) {
     setEditingUser(user.usuario);
     setName(user.usuario);
@@ -699,6 +737,7 @@ function UsersView({ users, setUsers }) {
     setStatus(user.status);
   }
 
+  // Alterna o status sem permitir que o administrador principal seja bloqueado.
   function toggleUser(username) {
     setUsers(
       users.map((user) =>
@@ -806,6 +845,7 @@ function UsersView({ users, setUsers }) {
   );
 }
 
+// Relatório geral calculado a partir dos dados atuais do painel.
 function ReportView({ tasks, users }) {
   const done = tasks.filter((task) => task.concluida).length;
   const progress = tasks.length ? Math.round((done / tasks.length) * 100) : 0;
